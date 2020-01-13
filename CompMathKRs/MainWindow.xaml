@@ -275,15 +275,149 @@
                     <Button Name="SecondBirgeVietta" Grid.Row="0" Grid.Column="2"
                             Content="BirgeVietta" Click="SecondBirgeVietta_OnClick"/>
                     
-                    <Label Name="SecondX1label" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="x1 = "
+                    <Label Name="SecondX1Label" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="x1 = "
                            BorderBrush="Black" BorderThickness="3" Margin="1"/>
                     <Button Name="SecondCombined" Grid.Row="1" Grid.Column="2"
                             Content="CombinedMethod" Click="SecondCombined_OnClick"/>
                     
-                    <Label Name="SecondX2label" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="x1 = "
+                    <Label Name="SecondX2Label" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="x1 = "
                            BorderBrush="Black" BorderThickness="3" Margin="1"/>
                     <Button Name="SecondSuccessiveApproximationMethod" Grid.Row="2" Grid.Column="2"
                             Content="SuccessiveApproximationMethod" Click="SecondSuccessiveApproximationMethod_OnClick"/>
+                    
+                    
+                </Grid>
+                
+            </Grid>
+        </TabItem>
+        <TabItem Header="Third" GotFocus="Third_OnGotFocus">
+            <Grid Name="ThirdGrid" MinHeight="60">
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock>
+                        -2.45200E3x1 + 2.74900E5x2 + 7.94000E4x3 + 6.44200E5x4 =  6.776360E5 <LineBreak/>
+                         3.26600E4x1 - 1.65400E4x2 + 8.94600E4x3 - 8.05600E4x4 = -9.088400E4 <LineBreak/>
+                         5.17250E5x1 + 3.78800E4x2 + 5.32800E3x3 + 9.87560E5x4 =  1.594216E6 <LineBreak/>
+                         5.53312E5x1 + 2.19400E5x2 + 4.33200E3x3 - 2.62200E5x4 =  1.322232E6 <LineBreak/>
+                </TextBlock>
+                <TabControl Grid.Row="0" Grid.Column="1">
+                    <TabItem Header="y'">
+                        
+                        <DataGrid Name="ThirdTable" 
+                                       DataContext="{Binding}" AutoGeneratingColumn="Table_OnAutoGeneratingColumn" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="I" Binding="{Binding I}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="X" Binding="{Binding X}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Y" Binding="{Binding Y}"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        
+                    </TabItem>
+                </TabControl>
+                
+                
+                <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="ThirdButtonGrid">
+                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions> 
+                    
+                    <Label Name="ThirdXlabel" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="x1 = "
+                           BorderBrush="Black" BorderThickness="3" Margin="1"/>
+                    <TextBlock Name="ThirdGaussMethod" Grid.Row="0" Grid.Column="2"
+                            Text="GaussMethod" TextAlignment="Center" VerticalAlignment="Center" />
+                    
+                    <Label Name="ThirdX1label" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="x1 = "
+                           BorderBrush="Black" BorderThickness="3" Margin="1"/>
+                    <TextBlock Name="ThirdGaussSeidelMethod" Grid.Row="1" Grid.Column="2"
+                            Text="GaussSeidelMethod" TextAlignment="Center" VerticalAlignment="Center" />
+                    
+                    
+                </Grid>
+                
+            </Grid>
+        </TabItem>
+        <TabItem Header="Fourth" GotFocus="Fourth_OnGotFocus">
+            <Grid Name="FourthRootGrid" MinHeight="60" >
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <!--<Canvas Name="Graphic" Grid.Row="0" Grid.Column="0"/>-->
+                <lvc:CartesianChart Name="FourthCartesianChart1"  Grid.Row="0" Grid.Column="0" 
+                                    Series="{Binding FourthSeriesCollection}" LegendLocation="Right" >
+                    <!--<lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Y" Labels="{Binding _yMass}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>-->
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="x" Labels="{Binding XFormatter}">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator IsEnabled="False" Step="0.2"></lvc:Separator>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+                
+                <TabControl Grid.Row="0" Grid.Column="1">
+                    <TabItem Header="y'">
+                        
+                        <DataGrid Name="FourthTable" 
+                                       DataContext="{Binding}" Loaded="Table_OnLoaded" AutoGeneratingColumn="Table_OnAutoGeneratingColumn" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="I" Binding="{Binding I}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="X" Binding="{Binding X}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="Y" Binding="{Binding Y}"></DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        
+                    </TabItem>
+                </TabControl>
+                
+                
+                <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="FourthButtonGrid">
+                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>  
+                    
+                    <Button Name="FourthButtonEulerMod" Content="Euler2" Click="ButtonEulerMod_OnClick"/>
+                    <TextBox Name="FourthHBox" Grid.Row="0" Grid.Column="3" 
+                             PreviewTextInput="HBox_OnPreviewTextInput" Text="0.05"></TextBox>
+                    <Button Name="FourthButtonOk" Grid.Row="0" Grid.Column="4"
+                            Content="OK" Click="FourthButtonOk_OnClick"/>
+                    
                     
                     
                 </Grid>
