@@ -392,7 +392,7 @@ namespace CompMathKRs
             {
                 if (i < r.Length - 1 && r[i] > 0) s += "+";
                 s += Math.Round(r[i], 4).ToString() + " x" + cl[i] + ' ';
-                if (i == r.Length / 2) s += "\n";
+                //if (i == r.Length / 2) s += "\n";
             }
 
             return s;
@@ -607,6 +607,7 @@ namespace CompMathKRs
 
             Fill_XYList();
 
+            if(FirstTable.ItemsSource==null)
             FirstTable.ItemsSource = XYlist;
         }
 
