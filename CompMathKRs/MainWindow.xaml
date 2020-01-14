@@ -8,117 +8,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800" d:DataContext="{d:DesignInstance local:MainWindow}">
     <TabControl>
-        <TabItem Header="Root">
-            <Grid Name="RootGrid" MinHeight="60" >
-                
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="2*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <!--<Canvas Name="Graphic" Grid.Row="0" Grid.Column="0"/>-->
-                <lvc:CartesianChart Name="CartesianChart1"  Grid.Row="0" Grid.Column="0" 
-                                    Series="{Binding SeriesCollection}" LegendLocation="Right" >
-                    <!--<lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Y" Labels="{Binding _yMass}"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>-->
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="x" Labels="{Binding XFormatter}">
-                            <lvc:Axis.Separator>
-                                <lvc:Separator IsEnabled="False" Step="0.2"></lvc:Separator>
-                            </lvc:Axis.Separator>
-                        </lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                </lvc:CartesianChart>
-                
-                <TabControl Grid.Row="0" Grid.Column="1">
-                
-                    <TabItem Header="y'">
-                        
-                        <DataGrid Name="Table" 
-                                       DataContext="{Binding}" Loaded="Table_OnLoaded" AutoGeneratingColumn="Table_OnAutoGeneratingColumn" >
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="I" Binding="{Binding I}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="X" Binding="{Binding X}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Y" Binding="{Binding Y}"></DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        
-                    </TabItem>
-                    
-                    <TabItem Header="P(x)">
-                        <DataGrid Name="Table1" 
-                                  DataContext="{Binding}" Loaded="Table_OnLoaded" AutoGeneratingColumn="Table_OnAutoGeneratingColumn" >
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="I" Binding="{Binding I}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="X" Binding="{Binding X}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Y" Binding="{Binding Y}"></DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid> 
-                    </TabItem>
-                    
-                    <TabItem Header="P(x)=f(x)">
-                        <DataGrid Name="Table2" 
-                                  DataContext="{Binding}" Loaded="Table_OnLoaded" AutoGeneratingColumn="Table_OnAutoGeneratingColumn" >
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="I" Binding="{Binding I}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="X" Binding="{Binding X}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Y" Binding="{Binding Y}"></DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </TabItem>
-                    
-                    
-                </TabControl>
-                
-                
-                <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="ButtonGrid">
-                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="0.5*"/>
-                        <ColumnDefinition Width="0.5*"/>
-                    </Grid.ColumnDefinitions>  
-                    
-                    <Button Name="ButtonEuler" Content="Euler" Click="ButtonEuler_OnClick"/>
-                    <Button Name="ButtonRungeKutt" Grid.Row="0" Grid.Column="1"
-                            Content="Runge-Kutt" Click="ButtonRungeKutt_OnClick"/>
-                    <Button Name="ButtonDifferenceTable" Grid.Row="0" Grid.Column="2"
-                            Content="DifferenceTable" Click="ButtonDifferenceTable_OnClick"/>
-                    
-                    <TextBox Name="HBox" Grid.Row="0" Grid.Column="3" PreviewTextInput="HBox_OnPreviewTextInput" Text="0.05"></TextBox>
-                    <Button Name="ButtonOk" Grid.Row="0" Grid.Column="4"
-                            Content="OK" Click="ButtonOk_OnClick"/>
-                    
-                    <Label Name="QuadFunc" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Content="P(x) = "
-                           BorderBrush="Black" BorderThickness="3" Margin="1"/>
-                    <Button Name="Quads" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2"
-                            Content="QuadsFunction" Click="Quads_OnClick"/>
-                    
-                    <Label Name="PxFunc" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Content="P(x) = f(x) "
-                           BorderBrush="Black" BorderThickness="3" Margin="1"/>
-                    <Button Name="Squares" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2"
-                            Content="P(x)-f(x) = 0" Click="Squares_OnClick"/>
-                    
-                    <Label Name="Xlabel" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Content="x1 = "
-                           BorderBrush="Black" BorderThickness="3" Margin="1"/>
-                    
-                    
-                </Grid>
-                
-            </Grid>
-        </TabItem>
         <TabItem Header="First" GotFocus="First_OnGotFocus" >
             <Grid Name="FirstGrid" MinHeight="60" >
                 
@@ -131,22 +20,11 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 
-                <!--<lvc:CartesianChart Name="FirstCartesianChart1"  Grid.Row="0" Grid.Column="0" 
-                                    Series="{Binding SeriesCollection}" LegendLocation="Right" >
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="x" Labels="{Binding XFormatter}">
-                            <lvc:Axis.Separator>
-                                <lvc:Separator IsEnabled="False" Step="0.2"></lvc:Separator>
-                            </lvc:Axis.Separator>
-                        </lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                </lvc:CartesianChart>-->
-                
                 <TabControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                 
                     <TabItem Header="y=f(x)">
                         <DataGrid Name="FirstTable" 
-                                       DataContext="{Binding}" AutoGeneratingColumn="Table_OnAutoGeneratingColumn" >
+                                       DataContext="{Binding}" Loaded="First_OnGotFocus" AutoGeneratingColumn="Table_OnAutoGeneratingColumn" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="I" Binding="{Binding I}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="X" Binding="{Binding X}"></DataGridTextColumn>
@@ -155,18 +33,7 @@
                         </DataGrid>
                     </TabItem>
                     
-                    <TabItem Header="P(x)">
-                        <DataGrid Name="FirstTable1" 
-                                  DataContext="{Binding}" AutoGeneratingColumn="Table_OnAutoGeneratingColumn" >
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="I" Binding="{Binding I}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="X" Binding="{Binding X}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Y" Binding="{Binding Y}"></DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid> 
-                    </TabItem>
                 </TabControl>
-                
                 
                 <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="FirstButtonGrid">
                     
@@ -219,14 +86,10 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <!--<Canvas Name="Graphic" Grid.Row="0" Grid.Column="0"/>-->
                 <lvc:CartesianChart Name="SecondCartesianChart1"  Grid.Row="0" Grid.Column="0" 
                                     Series="{Binding SecondSeriesCollection}" LegendLocation="Right" >
-                    <!--<lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Y" Labels="{Binding _yMass}"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>-->
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="x" Labels="{Binding}">
+                        <lvc:Axis Title="x" Labels="{Binding XFormatter}">
                             <lvc:Axis.Separator>
                                 <lvc:Separator IsEnabled="False" Step="0.2"></lvc:Separator>
                             </lvc:Axis.Separator>
@@ -268,7 +131,7 @@
                     
                     <TextBox Name="SecondHBox" Grid.Row="0" Grid.Column="3" PreviewTextInput="HBox_OnPreviewTextInput" Text="0.05"></TextBox>
                     <Button Name="SecondButtonOk" Grid.Row="0" Grid.Column="4"
-                            Content="OK" Click="ButtonOk_OnClick"/>
+                            Content="OK" Click="SecondButtonOk_OnClick"/>
                     
                     <Label Name="SecondXlabel" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="x1 = "
                            BorderBrush="Black" BorderThickness="3" Margin="1"/>
@@ -284,6 +147,9 @@
                            BorderBrush="Black" BorderThickness="3" Margin="1"/>
                     <Button Name="SecondSuccessiveApproximationMethod" Grid.Row="2" Grid.Column="2"
                             Content="SuccessiveApproximationMethod" Click="SecondSuccessiveApproximationMethod_OnClick"/>
+                    <Label Name="SecondX3Label" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" 
+                           Content="4x³ - 5x² - 2x + 2.98 = 0"
+                           BorderBrush="Black" BorderThickness="3" Margin="1"/>
                     
                     
                 </Grid>
@@ -301,28 +167,12 @@
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock>
-                        -2.45200E3x1 + 2.74900E5x2 + 7.94000E4x3 + 6.44200E5x4 =  6.776360E5 <LineBreak/>
-                         3.26600E4x1 - 1.65400E4x2 + 8.94600E4x3 - 8.05600E4x4 = -9.088400E4 <LineBreak/>
-                         5.17250E5x1 + 3.78800E4x2 + 5.32800E3x3 + 9.87560E5x4 =  1.594216E6 <LineBreak/>
-                         5.53312E5x1 + 2.19400E5x2 + 4.33200E3x3 - 2.62200E5x4 =  1.322232E6 <LineBreak/>
+                <TextBlock xml:space="preserve" Grid.ColumnSpan="2">
+                        -2.45200E3*x1 + 2.74900E5*x2 + 7.94000E4*x3 + 6.44200E5*x4 =  6.776360E5 <LineBreak/>
+                         3.26600E4*x1 - 1.65400E4*x2 + 8.94600E4*x3 - 8.05600E4*x4 = -9.088400E4 <LineBreak/>
+                         5.17250E5*x1 + 3.78800E4*x2 + 5.32800E3*x3 + 9.87560E5*x4 =  1.594216E6 <LineBreak/>
+                         5.53312E5*x1 + 2.19400E5*x2 + 4.33200E3*x3 - 2.62200E5*x4 =  1.322232E6 <LineBreak/>
                 </TextBlock>
-                <TabControl Grid.Row="0" Grid.Column="1">
-                    <TabItem Header="y'">
-                        
-                        <DataGrid Name="ThirdTable" 
-                                       DataContext="{Binding}" AutoGeneratingColumn="Table_OnAutoGeneratingColumn" >
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="I" Binding="{Binding I}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="X" Binding="{Binding X}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Y" Binding="{Binding Y}"></DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        
-                    </TabItem>
-                </TabControl>
-                
-                
                 <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="ThirdButtonGrid">
                     
                     <Grid.RowDefinitions>
@@ -344,7 +194,7 @@
                     <TextBlock Name="ThirdGaussMethod" Grid.Row="0" Grid.Column="2"
                             Text="GaussMethod" TextAlignment="Center" VerticalAlignment="Center" />
                     
-                    <Label Name="ThirdX1label" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="x1 = "
+                    <Label Name="ThirdX1Label" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="x1 = "
                            BorderBrush="Black" BorderThickness="3" Margin="1"/>
                     <TextBlock Name="ThirdGaussSeidelMethod" Grid.Row="1" Grid.Column="2"
                             Text="GaussSeidelMethod" TextAlignment="Center" VerticalAlignment="Center" />
@@ -365,12 +215,8 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <!--<Canvas Name="Graphic" Grid.Row="0" Grid.Column="0"/>-->
                 <lvc:CartesianChart Name="FourthCartesianChart1"  Grid.Row="0" Grid.Column="0" 
                                     Series="{Binding FourthSeriesCollection}" LegendLocation="Right" >
-                    <!--<lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Y" Labels="{Binding _yMass}"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>-->
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="x" Labels="{Binding XFormatter}">
                             <lvc:Axis.Separator>
@@ -384,7 +230,7 @@
                     <TabItem Header="y'">
                         
                         <DataGrid Name="FourthTable" 
-                                       DataContext="{Binding}" Loaded="Table_OnLoaded" AutoGeneratingColumn="Table_OnAutoGeneratingColumn" >
+                                       DataContext="{Binding}" AutoGeneratingColumn="Table_OnAutoGeneratingColumn" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="I" Binding="{Binding I}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="X" Binding="{Binding X}"></DataGridTextColumn>
@@ -417,9 +263,6 @@
                              PreviewTextInput="HBox_OnPreviewTextInput" Text="0.05"></TextBox>
                     <Button Name="FourthButtonOk" Grid.Row="0" Grid.Column="4"
                             Content="OK" Click="FourthButtonOk_OnClick"/>
-                    
-                    
-                    
                 </Grid>
                 
             </Grid>

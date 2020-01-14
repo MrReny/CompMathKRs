@@ -56,8 +56,6 @@ namespace CompMathKRs
 
         public SeriesCollection SecondSeriesCollection { get; set; }
         public SeriesCollection FourthSeriesCollection { get; set; }
-        
-        public SeriesCollection SeriesCollection { get; set; }
 
         public double H // property for _h
         {
@@ -83,12 +81,6 @@ namespace CompMathKRs
         {
             InitializeComponent();
         }
-
-        private double _Function(double x)
-        {
-            double fx = 25 * Math.Cos(7.5 * x) / (x + 2);
-            return fx;
-        }
         
         private double _FourthFunction(double x, double y)
         {
@@ -97,31 +89,6 @@ namespace CompMathKRs
         }
 
         // Euler
-        private void EulerMethod()
-        {
-            _xMass = new double[_n];
-            _yMass = new double[_n];
-
-            _xMass[0] = 0;
-            _yMass[0] = _y0;
-
-            XYlist = new List<XYtable>(_n);
-            XYlist.Add(new XYtable(_xMass[0], _yMass[0], 0));
-
-            for (int i = 1; i < _n; i++)
-            {
-                _yMass[i] = _yMass[i - 1] + _h * _Function(_xMass[i - 1]);
-                _xMass[i] = _xMass[i - 1] + _h;
-
-                XYlist.Add(new XYtable(_xMass[i], _yMass[i], i));
-            }
-
-            Table.ItemsSource = XYlist;
-
-            DrawGraph("Euler");
-        }
-
-        // dont even work, because of differentiating on one argument
         private void EulerMethod_mod2()
         {
             _xMass = new double[_n];
@@ -152,54 +119,6 @@ namespace CompMathKRs
             FourthTable.ItemsSource = XYlist;
 
             FourthDrawGraph("Euler 2");
-        }
-
-        private void RungeKuttMethod()
-        {
-            _xMass = new double[_n];
-            _yMass = new double[_n];
-
-            _xMass[0] = 0;
-            _yMass[0] = _y0;
-
-            XYlist = new List<XYtable>(_n);
-            XYlist.Add(new XYtable(_xMass[0], _yMass[0], 0));
-
-            double dY = 0;
-
-            double K1 = 0;
-            double K2 = 0;
-            double K3 = 0;
-            double K4 = 0;
-
-            for (int i = 1; i < _n; i++)
-            {
-                K1 = _Function(_xMass[i - 1]);
-                K2 = _Function(_xMass[i - 1] + _h / 2);
-                K3 = _Function(_xMass[i - 1] + _h / 2);
-                K4 = _Function(_xMass[i - 1] + _h);
-
-                dY = _h / 6 * (K1 + 2 * K2 + 2 * K3 + K4);
-                _yMass[i] = _yMass[i - 1] + dY;
-                _xMass[i] = _xMass[i - 1] + _h;
-
-                XYlist.Add(new XYtable(_xMass[i], _yMass[i], i));
-            }
-
-            Table.ItemsSource = XYlist;
-
-            DrawGraph("Runge\n-Kutt");
-        }
-
-        private void DrawGraph(string s)
-        {
-
-            SeriesCollection = MakeSeriesCollection(s);
-            CartesianChart1.Series = SeriesCollection;
-
-            XFormatter = value => value.ToString("C");
-
-            DataContext = this; // very important
         }
 
         private void SecondDrawGraph(string s)
@@ -391,7 +310,7 @@ namespace CompMathKRs
                 norm += (xk[i] - xkp[i]) * (xk[i] - xkp[i]);
             }
 
-            return (Math.Sqrt(norm) < 1);
+            return (Math.Sqrt(norm) < 0.01);
 
         }
 
@@ -582,7 +501,7 @@ namespace CompMathKRs
 
             for (int i = 0; i < l.Count; i++)
             {
-                x[i] = l[i][1];
+                x[i] = l[i][0];
             }
 
             for (int i = 0; i < x.Length; i++)
@@ -591,7 +510,7 @@ namespace CompMathKRs
                 //double A;
                 //double q;
 
-                while (Math.Abs(x[i] - x1) > 0.0001)
+                while (Math.Abs(PolinomialFunc(r,x[i]) - PolinomialFunc(r,x1)) > 0.0001)
                 {
                     //q = (ModFunc(r, x1) - x1)/(x1 - x[i]);
                     //A = 1 / (1 - q);
@@ -625,9 +544,9 @@ namespace CompMathKRs
             for (int i = 0; i < x.Length; i++)
             {
                 xstring += "x" + i + " = " + Math.Round(x[i], 6) + ";  ";
-                xstring += "y" + "(x" + i + ") = " + Math.Round(PolinomialFunc(r, x[i]), 13) + ";  ";
+                xstring += "y" + "(x" + i + ") = " + Math.Round(PolinomialFunc(r, x[i]), 6) + ";  ";
 
-                if (i == (x.Length - 1) / 2) xstring += "\n";
+                if (i == (x.Length - 2) / 2) xstring += "\n";
             }
 
             return xstring;
@@ -635,38 +554,10 @@ namespace CompMathKRs
 
 
         //Events section
-
-        private void Table_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            if (SeriesCollection != null) return;
-            EulerMethod();
-        }
-
-        private void ButtonEuler_OnClick(object sender, RoutedEventArgs e)
-        {
-            EulerMethod();
-        }
-
-        private void ButtonRungeKutt_OnClick(object sender, RoutedEventArgs e)
-        {
-            RungeKuttMethod();
-        }
-
-        private void ButtonDifferenceTable_OnClick(object sender, RoutedEventArgs e)
-        {
-            Fill_XYdYList();
-            Table.ItemsSource = XYdYlist;
-        }
-
-        private void ButtonOk_OnClick(object sender, RoutedEventArgs e)
-        {
-            var h = double.Parse(HBox.Text, System.Globalization.CultureInfo.InvariantCulture);
-
-            H = h;
-        }
-
         private void HBox_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            var HBox = (TextBox) sender;
+                
             if (!(Char.IsDigit(e.Text, 0) || (e.Text == ".")
                   && (!HBox.Text.Contains(".")
                       && HBox.Text.Length != 0)))
@@ -674,7 +565,6 @@ namespace CompMathKRs
                 e.Handled = true;
             }
         }
-
         private void Table_OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             switch (e.Column.Header.ToString())
@@ -690,112 +580,7 @@ namespace CompMathKRs
                     break;
             }
         }
-
-        private void Quads_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (XYdYlist == null) return;
-            _r = CoefficientsMethod(XYdYlist[1].dY.Length);
-
-            RecalculateWithQuadsMethod(_r);
-
-            Table1.ItemsSource = XYlist;
-
-            QuadFunc.Content = _FuncToString(_r);
-
-
-            var obsPlist = new List<ObservablePoint>();
-            for (int i = 0; i < _n; i++)
-            {
-                obsPlist.Add(new ObservablePoint(_xMass[i], _yMass[i]));
-            }
-
-            if (SeriesCollection.FirstOrDefault((item) => item.Title == "P(x)") != null)
-            {
-                SeriesCollection.FirstOrDefault((item) => item.Title == "P(x)").Values =
-                    new ChartValues<ObservablePoint>(obsPlist);
-            }
-            else
-            {
-                SeriesCollection.Add(new LineSeries()
-                {
-                    Title = "P(x)",
-                    Values = new ChartValues<ObservablePoint>(obsPlist),
-                    Fill = Brushes.Transparent
-                });
-            }
-
-        }
-
-        private void Squares_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (_r == null) return;
-            double[] fr = new double[_r.Length];
-            double[] fx = new double[_xMass.Length];
-            double[] fy = new double[_yMass.Length];
-
-            _r.CopyTo(fr, 0);
-            fr[0] -= 13;
-            fr[1] -= 1.5;
-
-            _xMass.CopyTo(fx, 0);
-            _yMass.CopyTo(fy, 0);
-
-            RecalculateWithQuadsMethod(fr);
-
-            Table2.ItemsSource = XYlist;
-
-            PxFunc.Content = _FuncToString(fr, sender);
-
-            var obsPlist = new List<ObservablePoint>();
-            for (int i = 0; i < _n; i++)
-            {
-                obsPlist.Add(new ObservablePoint(_xMass[i], _yMass[i]));
-            }
-
-            _bvxMass = new double[_n];
-            _bvyMass = new double[_n];
-
-            _xMass.CopyTo(_bvxMass, 0);
-            _yMass.CopyTo(_bvyMass, 0);
-
-            _xMass = fx;
-            _yMass = fy;
-
-            if (SeriesCollection.FirstOrDefault((item) => item.Title == "P(x)=f(x)") != null)
-            {
-                SeriesCollection.FirstOrDefault((item) => item.Title == "P(x)=f(x)").Values =
-                    new ChartValues<ObservablePoint>(obsPlist);
-
-            }
-            else
-            {
-                SeriesCollection.Add(new LineSeries()
-                {
-                    Title = "P(x)=f(x)",
-                    Values = new ChartValues<ObservablePoint>(obsPlist),
-                    Fill = Brushes.Transparent
-                });
-                SeriesCollection.Add(new LineSeries()
-                {
-                    Title = "y=0",
-                    Values = new ChartValues<ObservablePoint>(new ObservablePoint[]
-                    {
-                        new ObservablePoint(0, 0), new ObservablePoint(2, 0),
-                    })
-                });
-            }
-
-            var yOx = BirgeVietaMethod(fr);
-
-            if (yOx != null)
-            {
-                Xlabel.Content = MakeRootString(_r, yOx);
-            }
-
-            else Xlabel.Content = "Something gone wrong";
-
-        }
-
+        
         // First exercise
         private void First_OnGotFocus(object sender, RoutedEventArgs e)
         {
@@ -904,14 +689,12 @@ namespace CompMathKRs
             double xi = PolinomialFunc(_r, 1.7);
             FirstQuadFunc.Content = _FuncToString(_r);
             FirstXQuadFunc.Content = FirstXQuadFunc.Content.ToString().Replace("?", xi.ToString());
-
-
         }
 
         // Second exercise
         private void Second_OnGotFocus(object sender, RoutedEventArgs e)
         {
-            _lX = 0.75;
+            _lX = -0.85;
             _uX = 1.25;
 
             var h = double.Parse(SecondHBox.Text, System.Globalization.CultureInfo.InvariantCulture);
@@ -924,13 +707,11 @@ namespace CompMathKRs
 
             _xMass[0] = _lX;
             _yMass[0] = PolinomialFunc(_r, _xMass[0]);
-            ;
-
-
 
             for (int i = 1; i < _n; i++)
             {
                 _xMass[i] = _xMass[i - 1] + _h;
+                _xMass[i] = Math.Round(_xMass[i],4);
                 _yMass[i] = PolinomialFunc(_r, _xMass[i]);
 
             }
@@ -939,6 +720,18 @@ namespace CompMathKRs
 
             SecondTable.ItemsSource = XYlist;
             SecondDrawGraph("Y");
+            
+            if (SecondSeriesCollection.FirstOrDefault((item) => item.Title == "y=0") == null)
+            {
+                SecondSeriesCollection.Add(new LineSeries()
+                {
+                    Title = "y=0",
+                    Values = new ChartValues<ObservablePoint>(new ObservablePoint[]
+                    {
+                        new ObservablePoint(_lX,0), new ObservablePoint(_uX,0),
+                    })
+                });  
+            }
 
             double[] fx = new double[_xMass.Length];
             double[] fy = new double[_yMass.Length];
@@ -955,6 +748,13 @@ namespace CompMathKRs
             _xMass = fx;
             _yMass = fy;
 
+        }
+        
+        private void SecondButtonOk_OnClick(object sender, RoutedEventArgs e)
+        {
+            var h = double.Parse(SecondHBox.Text, System.Globalization.CultureInfo.InvariantCulture);
+
+            H = h;
         }
 
         private void SecondBirgeVietta_OnClick(object sender, RoutedEventArgs e)
@@ -1030,7 +830,7 @@ namespace CompMathKRs
                 xstring += "x" + (i + 1) + " = " + Math.Round(r[i], 6) + " ; ";
             }
 
-            ThirdX1label.Content = xstring;
+            ThirdX1Label.Content = xstring;
 
         }
 
